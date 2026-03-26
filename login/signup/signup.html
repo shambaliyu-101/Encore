@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Encore</title>
+    <link rel="stylesheet" href="signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page">
+        <div class="card-frame">
+            <div class="card">
+                
+                <div class="tab-container">
+                    <div class="tab-slider">
+                        <div class="dot"></div>
+                        <div class="line"></div>
+                        <div class="dot active"></div>
+                    </div>
+                    <div class="tab-labels">
+                        <span>Login</span>
+                        <span class="active-label">Sign Up</span>
+                    </div>
+                </div>
+
+                <h1>Welcome to<br>Encore</h1>
+                <p class="subtitle">Join us to discover and connect with local events!</p>
+
+                <form>
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="Your full name">
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group flex-2">
+                            <label>Birthdate</label>
+                            <input type="date">
+                        </div>
+                        <div class="input-group flex-1">
+                            <label>Gender</label>
+                            <select class="custom-select">
+                                <option value="" disabled selected>Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="you@example.com">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="Create a password">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" placeholder="Repeat your password">
+                    </div>
+
+                    <div class="footer-link">
+                        Already a user? <a href="#">Sign In</a>
+                    </div>
+
+                    <button type="submit" class="login-btn">Sign Up</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
