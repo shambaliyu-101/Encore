@@ -8,7 +8,15 @@
   <link rel="stylesheet" href="/css/styles.css" />
   <style>
 
-    /* ── Base ── */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-text-fill-color: var(--ink) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+
     body {
       margin: 0;
       padding: 0;
@@ -708,75 +716,66 @@
         <div class="auth-image-sub">1,200+ events every month</div>
       </div>
     </div>
-
   </div>
 
+  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script>
-    const SUPABASE_URL  = 'https://wzbubvzbbfgohzurlvmw.supabase.co';
-    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind6YnVidnpiYmZnb2h6dXJsdm13Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NjMxNzAsImV4cCI6MjA4NjMzOTE3MH0.Il2_RJJG_tiyngweV-nNOxGvVZQUbWbZwMAx21CgzNA';
+    const SUPABASE_URL  = 'https://qgvoznhldglucpsaisfs.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndm96bmhsZGdsdWNwc2Fpc2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxOTU4MjUsImV4cCI6MjA5MTc3MTgyNX0.e-5X1Lh4Tg8cP-FL-3eorV5pAZCDe4CR6i2AFeDKHWQ';
+
     const { createClient } = supabase;
     const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-    // ── Tab switching ──
+    // ── Tab switching ─────────────────────────────────────────────────────────
     function switchTab(tab) {
-      const loginPanel  = document.getElementById('panel-login');
-      const signupPanel = document.getElementById('panel-signup');
-      const tabLogin    = document.getElementById('tab-login');
-      const tabSignup   = document.getElementById('tab-signup');
-      const topbarRight = document.getElementById('topbar-right');
+      document.getElementById('panel-login').style.display  = tab === 'login'  ? 'block' : 'none';
+      document.getElementById('panel-signup').style.display = tab === 'signup' ? 'block' : 'none';
+      document.getElementById('tab-login').classList.toggle('active',  tab === 'login');
+      document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
       clearAlert();
-
-      if (tab === 'login') {
-        signupPanel.classList.remove('visible'); signupPanel.classList.add('hidden');
-        loginPanel.classList.remove('hidden');   loginPanel.classList.add('visible');
-        tabLogin.classList.add('active');        tabSignup.classList.remove('active');
-        topbarRight.innerHTML = 'No account? <a href="#" id="topbar-switch" onclick="switchTab(\'signup\'); return false;">Sign up</a>';
-      } else {
-        loginPanel.classList.remove('visible');  loginPanel.classList.add('hidden');
-        signupPanel.classList.remove('hidden');  signupPanel.classList.add('visible');
-        tabSignup.classList.add('active');       tabLogin.classList.remove('active');
-        topbarRight.innerHTML = 'Already have an account? <a href="#" id="topbar-switch" onclick="switchTab(\'login\'); return false;">Log in</a>';
-      }
     }
 
-    // ── Alerts ──
+    // ── Alert helpers ─────────────────────────────────────────────────────────
     function showAlert(msg, type = 'error') {
       const el = document.getElementById('alert');
       el.textContent = msg;
       el.className = 'alert ' + type;
     }
-
     function clearAlert() {
       const el = document.getElementById('alert');
       el.className = 'alert';
       el.textContent = '';
     }
 
-    // ── Loading state ──
+    // ── Loading state ─────────────────────────────────────────────────────────
     function setLoading(btnId, spinnerId, labelId, loading) {
       document.getElementById(btnId).disabled = loading;
       document.getElementById(spinnerId).style.display = loading ? 'block' : 'none';
-      document.getElementById(labelId).style.display   = loading ? 'none'  : 'inline';
+      document.getElementById(labelId).style.display   = loading ? 'none' : 'inline';
     }
 
-    // ── Login ──
-    async function handleLogin(e) {
-      e.preventDefault();
+    // ── Login ─────────────────────────────────────────────────────────────────
+    async function handleLogin() {
       clearAlert();
       const email    = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value;
+
       if (!email || !password) { showAlert('Please fill in all fields.'); return; }
+
       setLoading('btn-login', 'login-spinner', 'login-label', true);
+
       const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
       setLoading('btn-login', 'login-spinner', 'login-label', false);
+
       if (error) { showAlert(error.message); return; }
-      window.location.href = 'profile/profile.html';
+
+      window.location.href = '../profile/profile.html';
     }
 
-    // ── Signup ──
-    async function handleSignup(e) {
-      e.preventDefault();
+    // ── Signup ────────────────────────────────────────────────────────────────
+    async function handleSignup() {
       clearAlert();
       const first    = document.getElementById('signup-first').value.trim();
       const last     = document.getElementById('signup-last').value.trim();
@@ -784,25 +783,42 @@
       const email    = document.getElementById('signup-email').value.trim();
       const password = document.getElementById('signup-password').value;
       const confirm  = document.getElementById('signup-confirm').value;
-      if (!first || !last || !username || !email || !password) { showAlert('Please fill in all fields.'); return; }
-      if (password.length < 8) { showAlert('Password must be at least 8 characters.'); return; }
-      if (password !== confirm) { showAlert('Passwords do not match.'); return; }
+
+      if (!first || !last || !username || !email || !password) {
+        showAlert('Please fill in all fields.'); return;
+      }
+      if (password.length < 8) {
+        showAlert('Password must be at least 8 characters.'); return;
+      }
+      if (password !== confirm) {
+        showAlert('Passwords do not match.'); return;
+      }
+
       setLoading('btn-signup', 'signup-spinner', 'signup-label', true);
+
       const { data, error } = await sb.auth.signUp({
-        email, password,
-        options: { data: { first_name: first, last_name: last, user_name: username } }
+        email,
+        password,
+        options: {
+          data: { first_name: first, last_name: last, user_name: username }
+        }
       });
+
       setLoading('btn-signup', 'signup-spinner', 'signup-label', false);
+
       if (error) { showAlert(error.message); return; }
+
+      // Supabase may require email confirmation depending on your project settings.
+      // If email confirmation is off, the user is immediately signed in.
       if (data.session) {
-        window.location.href = 'profile/profile.html';
+        window.location.href = '../auth/onboarding.html';
       } else {
         showAlert('Account created! Check your email to confirm, then sign in.', 'success');
         switchTab('login');
       }
     }
 
-    // ── Google OAuth ──
+    // ── Google OAuth ──────────────────────────────────────────────────────────
     async function handleGoogleAuth() {
       const { error } = await sb.auth.signInWithOAuth({
         provider: 'google',
@@ -811,50 +827,32 @@
       if (error) showAlert(error.message);
     }
 
-    // ── Password toggle ──
-    function togglePassword(inputId, btn) {
-      const input  = document.getElementById(inputId);
-      const eyeOn  = btn.querySelector('.eye-icon');
-      const eyeOff = btn.querySelector('.eye-off-icon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        eyeOn.style.display  = 'block';
-        eyeOff.style.display = 'none';
-      } else {
-        input.type = 'password';
-        eyeOn.style.display  = 'none';
-        eyeOff.style.display = 'block';
-      }
-    }
-
-    // ── Forgot password ──
+    // ── Forgot password ───────────────────────────────────────────────────────
     async function handleForgotPassword() {
       const email = document.getElementById('login-email').value.trim();
       if (!email) { showAlert('Enter your email address first, then click Forgot password.'); return; }
+
       const { error } = await sb.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/reset-password.html'
+        redirectTo: window.location.origin + '/auth/reset-password.html'
       });
       if (error) { showAlert(error.message); return; }
       showAlert('Password reset email sent! Check your inbox.', 'success');
     }
 
-    // ── Redirect if already logged in ──
+    // ── Redirect if already logged in ─────────────────────────────────────────
     sb.auth.getSession().then(({ data: { session } }) => {
-      if (session) window.location.href = 'profile/profile.html';
+      if (session) window.location.href = '../profile/profile.html';
     });
 
-    // ── Enter key support ──
+    // ── Enter key support ──────────────────────────────────────────────────────
     document.addEventListener('keydown', e => {
       if (e.key !== 'Enter') return;
-      const loginVisible = document.getElementById('panel-login').classList.contains('visible');
-      if (loginVisible) handleLogin(e); else handleSignup(e);
+      const loginVisible = document.getElementById('panel-login').style.display !== 'none';
+      if (loginVisible) handleLogin(); else handleSignup();
     });
-
-    // ── URL tab param ──
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get('tab');
-    if (tab === 'signup') switchTab('signup');
-    else switchTab('login');
   </script>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+</script>
 </body>
 </html>
