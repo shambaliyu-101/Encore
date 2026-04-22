@@ -577,7 +577,7 @@
 
           <div class="auth-divider">or</div>
 
-          <form class="auth-form-fields" onsubmit="handleLogin(event)">
+          <form class="auth-form-fields" onsubmit="handleLogin(); return false;">
             <div class="form-group">
               <label for="login-email">Email</label>
               <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" />
@@ -634,7 +634,7 @@
 
           <div class="auth-divider">or</div>
 
-          <form class="auth-form-fields" onsubmit="handleSignup(event)">
+          <form class="auth-form-fields" onsubmit="handleSignup(); return false;">
             <div class="form-row">
               <div class="form-group">
                 <label for="signup-first">First name</label>
@@ -728,13 +728,26 @@
     const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
     // ── Tab switching ─────────────────────────────────────────────────────────
-    function switchTab(tab) {
-      document.getElementById('panel-login').style.display  = tab === 'login'  ? 'block' : 'none';
-      document.getElementById('panel-signup').style.display = tab === 'signup' ? 'block' : 'none';
-      document.getElementById('tab-login').classList.toggle('active',  tab === 'login');
-      document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
-      clearAlert();
-    }
+function switchTab(tab) {
+  const loginPanel  = document.getElementById('panel-login');
+  const signupPanel = document.getElementById('panel-signup');
+  const tabLogin    = document.getElementById('tab-login');
+  const tabSignup   = document.getElementById('tab-signup');
+  const topbarRight = document.getElementById('topbar-right');
+  clearAlert();
+
+  if (tab === 'login') {
+    signupPanel.classList.remove('visible'); signupPanel.classList.add('hidden');
+    loginPanel.classList.remove('hidden');   loginPanel.classList.add('visible');
+    tabLogin.classList.add('active');        tabSignup.classList.remove('active');
+    topbarRight.innerHTML = 'No account? <a href="#" onclick="switchTab(\'signup\'); return false;">Sign up</a>';
+  } else {
+    loginPanel.classList.remove('visible');  loginPanel.classList.add('hidden');
+    signupPanel.classList.remove('hidden');  signupPanel.classList.add('visible');
+    tabSignup.classList.add('active');       tabLogin.classList.remove('active');
+    topbarRight.innerHTML = 'Already have an account? <a href="#" onclick="switchTab(\'login\'); return false;">Log in</a>';
+  }
+}
 
     // ── Alert helpers ─────────────────────────────────────────────────────────
     function showAlert(msg, type = 'error') {
@@ -771,7 +784,7 @@
 
       if (error) { showAlert(error.message); return; }
 
-      window.location.href = '../profile/profile.html';
+      window.location.href = '/profile/profile.html';
     }
 
     // ── Signup ────────────────────────────────────────────────────────────────
@@ -847,7 +860,7 @@
     // ── Enter key support ──────────────────────────────────────────────────────
     document.addEventListener('keydown', e => {
       if (e.key !== 'Enter') return;
-      const loginVisible = document.getElementById('panel-login').style.display !== 'none';
+      const loginVisible = document.getElementById('panel-login').classList.contains('visible');
       if (loginVisible) handleLogin(); else handleSignup();
     });
   </script>
