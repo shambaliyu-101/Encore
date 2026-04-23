@@ -632,8 +632,10 @@
           <input type="checkbox" value="${name}" ${userInterests.includes(name) ? 'checked' : ''}>
           ${name}
         </label>`).join('');
-      grid.querySelectorAll('.interest-chip-modal').forEach(chip => {
-        chip.addEventListener('click', () => chip.classList.toggle('selected'));
+      grid.querySelectorAll('.interest-chip-modal input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          checkbox.closest('.interest-chip-modal').classList.toggle('selected', checkbox.checked);
+        });
       });
 
       document.getElementById('edit-modal').classList.add('open');
