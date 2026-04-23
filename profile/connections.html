@@ -464,7 +464,19 @@
       .connections-hero { padding: 1.75rem 1.25rem; flex-direction: column; align-items: flex-start; }
       .connections-grid { grid-template-columns: 1fr 1fr; }
     }
+    input, textarea, select { color: #F0EDE8 !important; }
+    input:focus, textarea:focus, select:focus { color: #F0EDE8 !important; }
+    input:-webkit-autofill, input:-webkit-autofill:focus,
+    textarea:-webkit-autofill, select:-webkit-autofill {
+      -webkit-text-fill-color: #F0EDE8 !important;
+    }
+    input::placeholder, textarea::placeholder { color: #888; opacity: 1; }
+
+
+
   </style>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#e8470a">
 </head>
 <body>
 

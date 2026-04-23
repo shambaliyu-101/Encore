@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta property="og:site_name" content="Encore ATL">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="My Profile — Encore ATL">
+  <meta property="og:description" content="Your Encore profile. Events attended, connections, and your ATL story.">
+  <meta property="og:url" content="https://encore-atl.vercel.app/profile/profile.html">
+  <meta property="og:image" content="https://qgvoznhldglucpsaisfs.supabase.co/storage/v1/object/public/encore-assets/og-default.jpg">
+  <meta name="description" content="Your Encore profile. Events attended, connections, and your ATL story.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="My Profile — Encore ATL">
+  <meta name="twitter:description" content="Your Encore profile. Events attended, connections, and your ATL story.">
+  <meta name="twitter:image" content="https://qgvoznhldglucpsaisfs.supabase.co/storage/v1/object/public/encore-assets/og-default.jpg">
   <title>Encore – Profile</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,6 +37,22 @@
     .skeleton-text  { height: 1em; width: 60%; }
     .skeleton-sub   { height: .8em; width: 40%; margin-top: .35rem; }
 
+    /* Force dark theme — overrides any conflicted CSS */
+    html, body { background: #0C0C0C !important; color: #F0EDE8 !important; }
+    nav.site-nav { background: rgba(12,12,12,0.95) !important; border-bottom: 1px solid #262626 !important; }
+    nav.site-nav a { color: #9A9590 !important; }
+    nav.site-nav a:hover, nav.site-nav a.active { color: #F0EDE8 !important; }
+    nav.site-nav a.active { color: #e8470a !important; }
+    main { background: #0C0C0C !important; }
+    .card { background: #141414 !important; border-color: #262626 !important; color: #F0EDE8 !important; }
+    .tabs { background: #141414 !important; border-color: #262626 !important; }
+    .tabs a { color: #9A9590 !important; }
+    .tabs a.active { color: #e8470a !important; background: rgba(232,71,10,.08) !important; }
+    .interests-list li { background: #1C1C1C !important; border-color: #262626 !important; color: #9A9590 !important; }
+    .empty-state { background: #141414 !important; border-color: #262626 !important; }
+    .empty-state h3, .empty-state p { color: #9A9590 !important; }
+    .btn-msg { border-color: #262626 !important; color: #9A9590 !important; background: transparent !important; }
+
     /* Edit profile inline form (modal overlay) */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 200;
@@ -35,7 +62,7 @@
     .modal-overlay.open { display: flex; }
 
     .modal {
-      background: #fff; border-radius: 16px;
+      background: #141414; border-radius: 16px;
       width: min(560px, 94vw); max-height: 90vh; overflow-y: auto;
       padding: 2rem; box-shadow: 0 20px 60px rgba(0,0,0,.2);
       animation: modal-in .2s ease;
@@ -43,31 +70,31 @@
     @keyframes modal-in { from { transform: translateY(16px); opacity: 0; } }
 
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-    .modal-header h2 { font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; }
+    .modal-header h2 { font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; color: #F0EDE8; }
     .modal-close {
       background: none; border: none; cursor: pointer;
       width: 32px; height: 32px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      color: #6b6b7b; transition: background .15s;
+      color: #9A9590; transition: background .15s;
     }
-    .modal-close:hover { background: #f4f4f6; }
+    .modal-close:hover { background: #2a2a2a; }
 
     .modal .form-group { margin-bottom: 1rem; }
     .modal .form-group label {
-      display: block; font-size: .78rem; font-weight: 600; color: #6b6b7b;
+      display: block; font-size: .78rem; font-weight: 600; color: #9A9590;
       text-transform: uppercase; letter-spacing: .07em; margin-bottom: .4rem;
     }
     .modal .form-group input,
     .modal .form-group textarea {
       width: 100%; padding: .7rem .9rem;
-      border: 1.5px solid #e8e8ec; border-radius: 8px;
-      font-family: 'Inter', sans-serif; font-size: .9rem; color: #111118;
-      background: #f9f9fb; outline: none; resize: vertical;
+      border: 1.5px solid #262626; border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: .9rem; color: #F0EDE8;
+      background: #1C1C1C; outline: none; resize: vertical;
       transition: border-color .18s, box-shadow .18s;
     }
     .modal .form-group input:focus,
     .modal .form-group textarea:focus {
-      border-color: #e8470a; box-shadow: 0 0 0 3px rgba(232,71,10,.1); background: #fff;
+      border-color: #e8470a; box-shadow: 0 0 0 3px rgba(232,71,10,.1); background: #1C1C1C;
     }
     .modal .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
 
@@ -76,22 +103,22 @@
     }
     .interest-chip-modal {
       padding: .4rem .85rem; border-radius: 20px;
-      border: 1.5px solid #e8e8ec; background: #f9f9fb;
-      font-size: .8rem; font-weight: 500; cursor: pointer;
+      border: 1.5px solid #262626; background: #1C1C1C;
+      font-size: .8rem; font-weight: 500; cursor: pointer; color: #9A9590;
       transition: all .15s; user-select: none;
     }
     .interest-chip-modal.selected {
-      border-color: #e8470a; background: rgba(232,71,10,.07); color: #e8470a;
+      border-color: #e8470a; background: rgba(232,71,10,.1); color: #e8470a;
     }
     .interest-chip-modal input { display: none; }
 
     .modal-actions { display: flex; gap: .75rem; margin-top: 1.5rem; justify-content: flex-end; }
     .btn-cancel-modal {
-      padding: .65rem 1.2rem; border: 1.5px solid #e8e8ec; border-radius: 9px;
+      padding: .65rem 1.2rem; border: 1.5px solid #262626; border-radius: 9px;
       background: none; font-family: 'Inter', sans-serif; font-size: .875rem;
-      font-weight: 600; cursor: pointer; color: #6b6b7b; transition: border-color .15s;
+      font-weight: 600; cursor: pointer; color: #9A9590; transition: border-color .15s;
     }
-    .btn-cancel-modal:hover { border-color: #aaa; }
+    .btn-cancel-modal:hover { border-color: #666; color: #F0EDE8; }
     .btn-save-modal {
       padding: .65rem 1.4rem; border: none; border-radius: 9px;
       background: #e8470a; color: #fff;
@@ -129,14 +156,26 @@
     /* Message button on connection cards */
     .btn-msg {
       padding: .3rem .7rem; border-radius: 7px;
-      border: 1.5px solid #e8e8ec; background: none;
-      font-size: .75rem; font-weight: 600; color: #6b6b7b;
+      border: 1.5px solid #262626; background: none;
+      font-size: .75rem; font-weight: 600; color: #9A9590;
       cursor: pointer; transition: all .15s; text-decoration: none;
       display: inline-flex; align-items: center; gap: .3rem;
     }
     .btn-msg:hover { border-color: #e8470a; color: #e8470a; background: rgba(232,71,10,.05); }
     .btn-msg svg { width: 12px; height: 12px; }
+    input, textarea, select { color: #F0EDE8 !important; }
+    input:focus, textarea:focus, select:focus { color: #F0EDE8 !important; }
+    input:-webkit-autofill, input:-webkit-autofill:focus,
+    textarea:-webkit-autofill, select:-webkit-autofill {
+      -webkit-text-fill-color: #F0EDE8 !important;
+    }
+    input::placeholder, textarea::placeholder { color: #888; opacity: 1; }
+
+
+
   </style>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#e8470a">
 </head>
 <body>
 
@@ -202,6 +241,13 @@
   </section>
 
   <!-- MAIN CONTENT -->
+  <!-- Profile completeness nudge (shown by JS when profile is incomplete) -->
+  <div id="profile-nudge" style="display:none;background:rgba(232,71,10,.08);border-bottom:1px solid rgba(232,71,10,.25);padding:.75rem 2rem;font-family:'Inter',sans-serif;font-size:.85rem;color:#F0EDE8;display:none;align-items:center;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+    <span id="profile-nudge-msg">Complete your profile to connect with more Atlanta locals.</span>
+    <a href="edit-profile.html" style="background:#e8470a;color:#fff;font-weight:700;font-size:.78rem;padding:.35rem .85rem;border-radius:6px;text-decoration:none;white-space:nowrap;">Complete Profile</a>
+    <button onclick="document.getElementById('profile-nudge').style.display='none'" style="background:none;border:none;color:#9A9590;cursor:pointer;font-size:1.1rem;line-height:1;padding:0 .25rem;">&times;</button>
+  </div>
+
   <main>
 
     <!-- LEFT SIDEBAR -->
@@ -331,6 +377,7 @@
 
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../src/utils/notifications.js"></script>
   <script>
     // ── CONFIG ────────────────────────────────────────────────────────────────
     const SUPABASE_URL  = 'https://qgvoznhldglucpsaisfs.supabase.co';
@@ -425,6 +472,18 @@
 
       // Interests sidebar
       await loadInterests();
+
+      // Profile completeness nudge
+      const missing = [];
+      if (!data.avatar_url) missing.push('a profile photo');
+      if (!data.bio)        missing.push('a bio');
+      if (!data.location)   missing.push('your location');
+      if (missing.length) {
+        const nudge = document.getElementById('profile-nudge');
+        document.getElementById('profile-nudge-msg').textContent =
+          `Add ${missing.join(', ')} to help others find and connect with you.`;
+        nudge.style.display = 'flex';
+      }
     }
 
     // ── Load user interests ───────────────────────────────────────────────────
@@ -509,7 +568,7 @@
         const isDraft = ev.status === 'draft';
 
         const row = document.createElement('div');
-        row.style.cssText = 'display:flex;align-items:center;gap:.85rem;background:#fff;border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem;';
+        row.style.cssText = 'display:flex;align-items:center;gap:.85rem;background:#1C1C1C;border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem;';
 
         const info = document.createElement('div');
         info.style.cssText = 'flex:1;min-width:0;';
@@ -528,7 +587,7 @@
         viewBtn.onmouseout  = () => { viewBtn.style.background=''; viewBtn.style.color='var(--orange)'; };
 
         const delBtn = document.createElement('button');
-        delBtn.style.cssText = 'flex-shrink:0;background:#fff0f0;border:1px solid #ffd0d0;color:var(--danger,#ff3b30);border-radius:7px;padding:.4rem .6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;';
+        delBtn.style.cssText = 'flex-shrink:0;background:rgba(255,59,48,.1);border:1px solid rgba(255,59,48,.3);color:var(--danger,#ff3b30);border-radius:7px;padding:.4rem .6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s;';
         delBtn.title = 'Delete event';
         delBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>';
         delBtn.addEventListener('click', async () => {
@@ -756,11 +815,14 @@
     </a>
   </nav>
   <style>
-    .mobile-tab-bar{display:none;position:fixed;bottom:0;left:0;right:0;height:60px;background:#fff;border-top:1px solid #e8e8ec;z-index:100;align-items:stretch;justify-content:space-around;padding:0 .25rem;padding-bottom:env(safe-area-inset-bottom)}
+    .mobile-tab-bar{display:none;position:fixed;bottom:0;left:0;right:0;height:60px;background:#0C0C0C;border-top:1px solid #262626;z-index:100;align-items:stretch;justify-content:space-around;padding:0 .25rem;padding-bottom:env(safe-area-inset-bottom)}
     .mobile-tab-bar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;text-decoration:none;color:#6b6b7b;font-size:.65rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;transition:color .18s;padding:.5rem 0}
     .mobile-tab-bar a.active,.mobile-tab-bar a:hover{color:#e8470a}
     .mobile-tab-bar a svg{width:22px;height:22px}
     @media(max-width:768px){.mobile-tab-bar{display:flex}body{padding-bottom:calc(60px + env(safe-area-inset-bottom))}}
   </style>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+</script>
 </body>
 </html>
