@@ -11,7 +11,7 @@
  */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
- 
+
 const SUPABASE_URL  = 'https://qgvoznhldglucpsaisfs.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFndm96bmhsZGdsdWNwc2Fpc2ZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxOTU4MjUsImV4cCI6MjA5MTc3MTgyNX0.e-5X1Lh4Tg8cP-FL-3eorV5pAZCDe4CR6i2AFeDKHWQ';
 
@@ -40,33 +40,4 @@ export async function requireAuth(redirectTo = '../login/login.html') {
 export async function signOut(redirectTo = '../login/login.html') {
   await supabase.auth.signOut();
   window.location.href = redirectTo;
-}
-
-
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-const SUPABASE_URL  = 'https://YOUR_PROJECT_ID.supabase.co';
-const SUPABASE_ANON = 'YOUR_ANON_KEY';
-
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON);
-
-// ─── Auth helpers ─────────────────────────────────────────────────────────────
-
-export async function getSession() {
-  const { data: { session } } = await supabase.auth.getSession();
-  return session;
-}
-
-export async function requireAuth(redirectTo = 'login.html') {
-  const session = await getSession();
-  if (!session) {
-    window.location.href = redirectTo;
-    return null;
-  }
-  return session;
-}
-
-export async function signOut() {
-  await supabase.auth.signOut();
-  window.location.href = 'login.html';
 }
